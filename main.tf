@@ -9,7 +9,7 @@
 # Creating a bucket with encryption
 # The name of the bucket.The name must be globally unique. You have to provide
 # the name of the bucket in the terraform.tfvars file create one if you don't have one.
-# The `bucket_name` variable is defined in the `variable.tf` file.
+# The `bucket_name` variable is defined in the `variable.tf` file...
 resource "aws_s3_bucket" "data_team_bucket" {
 
   bucket = var.bucket_name   
