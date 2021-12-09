@@ -9,11 +9,13 @@
 # Creating a bucket with encryption
 # The name of the bucket.The name must be globally unique. You have to provide
 # the name of the bucket in the terraform.tfvars file create one if you don't have one.
-# The `bucket_name` variable is defined in the `variable.tf` file.
-resource "aws_s3_bucket" "data_team_bucket" {
+# The `bucket_name` variable is defined in the `variable.tf` file...
+resource "aws_s3_bucket" "tobechukwu" {
 
-  bucket = var.bucket_name   
+  bucket = "tobechuwku" 
   acl    = "private"  
+
+
   server_side_encryption_configuration {
         rule {
             apply_server_side_encryption_by_default {
@@ -57,10 +59,34 @@ data "aws_iam_policy_document" "key_policy" {
    effect = "Allow"
    principals {
        type ="AWS"
-       identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"] 
+       identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/ifeanyi"] 
    }
    actions = ["kms:*"]
    resources = ["*"]
  }
    
 }
+
+
+ resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.tobechukwu.id 
+     
+     policy = jsonencode({
+       
+       Version = "2012-10-17"
+       Id      = "MYBUCKETPOLICY"
+       Statement = [
+      {
+        Sid       = "IPAllow"
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = "s3:*"
+        Resource = [
+          aws_s3_bucket.tobechukwu.arn,
+          "${aws_s3_bucket.tobechukwu.arn}/*"]
+      }
+       ]
+     })
+
+       
+  }
