@@ -16,8 +16,8 @@ provider "aws" {
 terraform {
   backend "s3" {
     # Replace this with your bucket name!
-    bucket         = "nasothedeygo"
-    key            = "myballer/extreme/terraform.tfstate"
+    bucket         = "godenvirmannytwo"
+    key            = "backend/group4/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true
   }

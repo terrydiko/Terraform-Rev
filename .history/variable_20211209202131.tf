@@ -1,0 +1,5 @@
+variable "wetin" {
+    type = string
+
+}
+
