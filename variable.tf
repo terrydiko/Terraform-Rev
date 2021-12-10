@@ -1,4 +1,4 @@
-variable "bucket_name" {
+variable "amie2021" {
     type = string
 
 }
