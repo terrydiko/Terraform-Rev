@@ -10,9 +10,9 @@
 # The name of the bucket.The name must be globally unique. You have to provide
 # the name of the bucket in the terraform.tfvars file create one if you don't have one.
 # The `bucket_name` variable is defined in the `variable.tf` file.
-resource "aws_s3_bucket" "data_team_bucket" {
+resource "aws_s3_bucket" "barcalomo" {
 
-  bucket = var.bucket_name   
+  bucket = var.barcatolu
   acl    = "private"  
   server_side_encryption_configuration {
         rule {

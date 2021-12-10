@@ -1,5 +1,6 @@
-variable "bucket_name" {
+variable "barcatolu" {
     type = string
 
 }
+
 
