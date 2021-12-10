@@ -24,7 +24,7 @@ resource "aws_s3_bucket" "data_team_bucket" {
   }
 
   tags = {
-    Name        = "My bucket"
+    Name        = "kenebucket"
     Environment = "Dev"
     Terraform = true    
   }
