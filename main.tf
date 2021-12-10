@@ -4,8 +4,6 @@
 # We need to add more permissions to the  kms key.
 # and a lot more.
 
-
-
 # Creating a bucket with encryption
 # The name of the bucket.The name must be globally unique. You have to provide
 # the name of the bucket in the terraform.tfvars file create one if you don't have one.
@@ -24,7 +22,7 @@ resource "aws_s3_bucket" "data_team_bucket" {
   }
 
   tags = {
-    Name        = "kenebucket"
+    Name        = "My bucket"
     Environment = "Dev"
     Terraform = true    
   }
@@ -63,4 +61,38 @@ data "aws_iam_policy_document" "key_policy" {
    resources = ["*"]
  }
    
+}
+#Adding a block public access
+resource "aws_s3_bucket_public_access_block" "blockpa" {
+  bucket = aws_s3_bucket.data_team_bucket.id
+
+  block_public_acls   = true
+  block_public_policy = true
+}
+resource "aws_s3_bucket_policy" "s3policy" {
+  bucket = aws_s3_bucket.data_team_bucket.id
+
+  # Terraform's "jsonencode" function converts a
+  # Terraform expression's result to valid JSON syntax.
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Id      = "MYBUCKETPOLICY"
+    Statement = [
+      {
+        Sid       = "IPAllow"
+        Effect    = "Deny"
+        Principal = "*"
+        Action    = "s3:*"
+        Resource = [
+          aws_s3_bucket.data_team_bucket.arn,
+          "${aws_s3_bucket.data_team_bucket.arn}/*",
+        ]
+        Condition = {
+          NotIpAddress = {
+            "aws:SourceIp" = "8.8.8.8/32"
+          }
+        }
+      },
+    ]
+  })
 }
